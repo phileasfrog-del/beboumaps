@@ -1,0 +1,10 @@
+Application BebouMaps — installation mobile et mode hors ligne
+
+1. Publiez le contenu du dossier BebouMaps sur un hébergement web HTTPS. Le service worker et la géolocalisation exigent une origine sécurisée; l’ouverture directe de index.html depuis l’archive ne permet pas l’installation PWA.
+2. Ouvrez l’adresse HTTPS sur votre téléphone et acceptez le chargement initial. L’application garde ses fichiers sur l’appareil. Dans « Infos pratiques », choisissez « Télécharger les photos » et attendez la confirmation pour les conserver hors ligne.
+3. Android : dans Chrome, choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil ».
+4. iPhone : dans Safari, choisissez Partager, puis « Sur l’écran d’accueil » et activez l’ouverture comme app si l’option apparaît.
+5. Avec Internet, ouvrez Infos pratiques > Télécharger la carte de Shanghai. Attendez le message confirmant que les cartes claire et sombre sont prêtes hors ligne avant de partir. Le téléchargement couvre Shanghai et ses proches quartiers aux niveaux de zoom 8 à 14. Les excursions lointaines (Suzhou, Wuzhen) gardent leurs fiches et photos hors ligne, mais pas leur fond cartographique détaillé.
+6. Le bouton de localisation demande l’autorisation GPS. La position reste dans l’application et n’est pas envoyée au carnet.
+
+OpenFreeMap et MapLibre chargent la carte sans clé API. La première installation et la préparation des tuiles nécessitent Internet. La géolocalisation peut dépendre du GPS et des réglages de localisation du téléphone.

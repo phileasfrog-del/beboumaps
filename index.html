@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f4efe6" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="BebouMaps" />
+  <link id="app-manifest" rel="manifest" href="manifest.webmanifest" />
+  <link id="app-touch-icon" rel="apple-touch-icon" href="icons/apple-touch-bright.png" />
+  <link id="site-favicon" rel="icon" href="icons/favicon-bright-512.png" type="image/png" sizes="512x512" />
+  <script>
+    try {
+      const isDark = localStorage.getItem("shanghai-dark-mode") === "true";
+      const suffix = isDark ? "dark" : "bright";
+      document.querySelector('meta[name="theme-color"]').content = isDark ? "#111519" : "#f4efe6";
+      document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]').content = isDark ? "black" : "default";
+      document.getElementById("app-manifest").href = isDark ? "manifest-dark.webmanifest" : "manifest.webmanifest";
+      document.getElementById("app-touch-icon").href = `icons/apple-touch-${suffix}.png`;
+      document.getElementById("site-favicon").href = `icons/favicon-${suffix}-512.png`;
+    } catch (error) { /* The app applies the saved theme once it starts. */ }
+  </script>
+  <title>beboumaps</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1><button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Activer le mode sombre"><img class="brand-logo" id="brand-logo" src="icons/logo-bright.png" alt="" /><span class="brand-title-group"><span class="brand-city">Shanghai</span><span class="brand-chinese">上海</span></span></button></h1>
+    </div>
+    <label class="search">
+      <span class="sr-only">Rechercher un lieu</span>
+      <input id="search" type="search" placeholder="Rechercher un lieu, un quartier…" autocomplete="off" />
+    </label>
+    <button type="button" class="ghost" id="btn-list">Liste</button>
+    <button type="button" class="ghost" id="btn-infos">Infos pratiques</button>
+    <button type="button" class="ghost" id="btn-gps" aria-label="Me localiser" title="Me localiser"><span aria-hidden="true">⌖</span></button>
+  </header>
+
+  <div id="map"></div>
+
+  <aside class="legend" aria-label="Filtre des lieux">
+    <button type="button" class="legend-toggle" id="legend-toggle" aria-expanded="false" aria-controls="legend-items">Filtre</button>
+    <p class="legend-title">Filtre</p>
+    <div id="legend-items"></div>
+  </aside>
+
+  <article class="sheet" id="sheet" hidden>
+    <button type="button" class="sheet-close" id="sheet-close" aria-label="Fermer">×</button>
+    <p class="sheet-cat" id="sheet-cat"></p>
+    <h2><a class="sheet-title-link" id="sheet-title" href="#place-list-content"></a></h2>
+    <p class="sheet-zh" id="sheet-zh"></p>
+    <img class="sheet-image" id="sheet-image" alt="" />
+    <p class="sheet-meta" id="sheet-meta"></p>
+    <p class="sheet-desc" id="sheet-desc"></p>
+    <p class="sheet-spec" id="sheet-spec"></p>
+    <p class="sheet-practical" id="sheet-practical"></p>
+    <a class="sheet-info" id="sheet-info" hidden>Vérifier les informations pratiques ↗</a>
+    <p class="sheet-addr" id="sheet-addr"></p>
+    <a class="sheet-link" id="sheet-amap" href="#">Ouvrir dans Amap ↗</a>
+    <button type="button" class="visited-toggle" id="visited-toggle" aria-pressed="false">Marquer comme vu</button>
+  </article>
+
+  <dialog class="list-dialog" id="place-list-dialog" aria-labelledby="place-list-title">
+    <div class="list-shell">
+      <header class="list-header">
+        <div>
+          <h2 id="place-list-title">Shanghai</h2>
+        </div>
+        <button type="button" class="list-top" id="list-top" aria-label="Revenir en haut de la liste" title="Haut de la liste"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6.5 10.5 12 5l5.5 5.5"/></svg></button>
+        <button type="button" class="list-close" id="list-close" aria-label="Fermer la liste"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        <div class="list-tools">
+          <label class="list-search">
+            <span class="sr-only">Rechercher dans la liste</span>
+            <input id="list-search" type="search" placeholder="Rechercher un lieu…" autocomplete="off" />
+          </label>
+        </div>
+      </header>
+      <div class="list-content" id="place-list-content"></div>
+    </div>
+  </dialog>
+
+  <dialog class="infos" id="infos">
+    <form method="dialog">
+      <button type="button" class="infos-close" id="infos-close" aria-label="Fermer les infos pratiques"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+      <h2>Infos pratiques</h2>
+      <h3>Ferry</h3>
+      <ul>
+        <li><a href="https://surl.amap.com/9Yz3Rr01l1ui" target="_blank" rel="noopener">Côté Pudong</a></li>
+        <li><a href="https://surl.amap.com/aMF2bqm1vgO5" target="_blank" rel="noopener">Côté Jinling</a></li>
+      </ul>
+      <h3>Concerts</h3>
+      <ul>
+        <li><a href="https://www.showstart.com/event/300741" target="_blank" rel="noopener">04/10 · Yin Yin</a></li>
+        <li><a href="http://showstart.com/event/309978" target="_blank" rel="noopener">05/10 · Long Arm</a></li>
+        <li><a href="https://www.showstart.com/event/309379" target="_blank" rel="noopener">07/10 · Brandt Brauer Frick</a></li>
+      </ul>
+      <h3 id="offline-title">Mode hors ligne</h3>
+      <button type="button" id="download-offline-data">Télécharger les données</button>
+      <p id="data-status" aria-live="polite"></p>
+      <h3 id="offline-vpn">VPN</h3>
+      <p>Astrill · Ikuu · Obscura · eSIM China Unicom</p>
+    </form>
+  </dialog>
+
+  <script>
+    if ("serviceWorker" in navigator && location.protocol !== "file:") {
+      if (!navigator.serviceWorker.controller) {
+        navigator.serviceWorker.addEventListener("controllerchange", () => location.reload(), { once: true });
+      }
+      navigator.serviceWorker.register(new URL("sw.js", document.baseURI)).catch((error) => console.error("Service worker:", error));
+    }
+    const addScript = (src) => new Promise((resolve, reject) => {
+      const script = document.createElement("script"); script.src = src; script.onload = resolve; script.onerror = reject; document.body.appendChild(script);
+    });
+    const controlled = Boolean(navigator.serviceWorker?.controller);
+    const mapScript = controlled ? new URL("vendor/maplibre-gl.js", document.baseURI).href : "https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.js";
+    const mapCss = document.createElement("link"); mapCss.rel = "stylesheet";
+    mapCss.href = controlled ? new URL("vendor/maplibre-gl.css", document.baseURI).href : "https://unpkg.com/maplibre-gl@5.6.0/dist/maplibre-gl.css";
+    document.head.appendChild(mapCss);
+    addScript(mapScript).then(() => addScript("places.js")).then(() => addScript("list-descriptions.js")).then(() => addScript("app.js")).catch((error) => console.error("Chargement de l’application impossible:", error));
+  </script>
+</body>
+</html>

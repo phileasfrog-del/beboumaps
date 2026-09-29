@@ -1,0 +1,33 @@
+{
+  "id": "./",
+  "name": "BebouMaps",
+  "short_name": "BebouMaps",
+  "description": "Carte interactive et carnet de lieux à Shanghai.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4efe6",
+  "theme_color": "#f4efe6",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "icons/favicon-bright-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/favicon-bright-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/favicon-bright-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
